@@ -22,6 +22,16 @@ public class GithubSelenideSoftAssertionsPageTests {
         $(byText("Show 3 more pages…")).click();
         $("[data-filterable-for=wiki-pages-filter]").lastChild().preceding(0).shouldHave(text("SoftAssertions"));
         $(byText("Soft assertions")).click(); // таких элемента два, но нам ведь неважно здесь, куда кликать
-        $("#user-content-3-using-junit5-extend-test-class").preceding(0).shouldHave(text("3. Using JUnit5 extend test class:"));
+        $(byText("3. Using JUnit5 extend test class:")).parent().sibling(0).shouldHave(text("@ExtendWith({SoftAssertsExtension.class})\n" +
+                "class Tests {\n" +
+                "  @Test\n" +
+                "  void test() {\n" +
+                "    Configuration.assertionMode = SOFT;\n" +
+                "    open(\"page.html\");\n" +
+                "\n" +
+                "    $(\"#first\").should(visible).click();\n" +
+                "    $(\"#second\").should(visible).click();\n" +
+                "  }\n" +
+                "}"));
     }
 }
